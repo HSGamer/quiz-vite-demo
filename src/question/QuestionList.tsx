@@ -9,7 +9,7 @@ type QuestionWithAnswer = {
     answer: string
 }
 
-type QuestionList = Question[]
+export type QuestionList = Question[]
 
 const demoQuestions : QuestionList = [
     {
