@@ -1,4 +1,4 @@
-import demoQuestions from "./question/QuestionList.tsx";
+import {demoQuestions} from "./question/QuestionList.tsx";
 import {Box} from "@mantine/core";
 import QuizForm from "./component/QuizForm.tsx";
 

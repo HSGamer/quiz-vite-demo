@@ -11,7 +11,7 @@ type QuestionWithAnswer = {
 
 export type QuestionList = Question[]
 
-const demoQuestions : QuestionList = [
+export const demoQuestions: QuestionList = [
     {
         key: "1",
         question: "What is 1 + 1",
@@ -42,11 +42,9 @@ const demoQuestions : QuestionList = [
     }
 ]
 
-export function withAnswer(questionList : QuestionList) : QuestionWithAnswer[] {
+export function withAnswer(questionList: QuestionList): QuestionWithAnswer[] {
     return questionList.map<QuestionWithAnswer>((val) => ({
         question: val,
         answer: ""
     }));
 }
-
-export default demoQuestions;
