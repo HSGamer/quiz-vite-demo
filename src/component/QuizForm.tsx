@@ -1,12 +1,13 @@
-import {QuestionList, withAnswer} from "../question/QuestionList.tsx";
+import {QuestionList, QuestionWithAnswer, withAnswer} from "../question/QuestionList.tsx";
 import {useForm} from "@mantine/form";
 import {Button, Group, Radio} from "@mantine/core";
 
 type QuizProps = {
-    question: QuestionList
+    question: QuestionList,
+    onAnswerSubmit: (answers: QuestionWithAnswer[]) => void
 }
 
-function QuizForm(props: QuizProps) {
+export function QuizForm(props: QuizProps) {
     const form = useForm({
         initialValues: {
             questions: withAnswer(props.question)
@@ -33,7 +34,7 @@ function QuizForm(props: QuizProps) {
     ));
 
     return (
-        <form onSubmit={form.onSubmit(values => console.log(values))}>
+        <form onSubmit={form.onSubmit(values=> props.onAnswerSubmit(values.questions))}>
             {fields}
 
             <Button color="lime" radius="lg" size="xl" compact uppercase type="submit">
@@ -42,5 +43,3 @@ function QuizForm(props: QuizProps) {
         </form>
     );
 }
-
-export default QuizForm;

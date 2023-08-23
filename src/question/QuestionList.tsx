@@ -4,7 +4,7 @@ type Question = {
     choices: string[]
 }
 
-type QuestionWithAnswer = {
+export type QuestionWithAnswer = {
     question: Question,
     answer: string
 }
