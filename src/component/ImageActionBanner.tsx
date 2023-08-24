@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
 interface ImageActionBannerProps {
     title: React.ReactNode;
     description: React.ReactNode;
-    image: string;
+    image?: string;
     action: {
         label: string;
         action: () => void;
