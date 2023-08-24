@@ -25,7 +25,7 @@ function Content() {
                     ? <QuizForm question={demoQuestions} onAnswerSubmit={submitAnswer}/>
                     : <ImageActionBanner title={"Demo Quiz"} description={"Start the quiz"} action={{
                         label: "Start",
-                        action: () => setStarted(true)
+                        onClick: () => setStarted(true)
                     }}/>
             }
         </Box>

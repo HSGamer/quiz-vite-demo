@@ -37,7 +37,7 @@ interface ImageActionBannerProps {
     image?: string;
     action: {
         label: string;
-        action: () => void;
+        onClick: () => void;
     };
 }
 
@@ -80,7 +80,7 @@ export function ImageActionBanner({
                     color="dark"
                     component="a"
                     size="xs"
-                    onClick={action.action}
+                    onClick={action.onClick}
                 >
                     {action.label}
                 </Button>
