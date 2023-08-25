@@ -1,15 +1,24 @@
-import {demoQuestions, QuestionWithAnswer} from "./question/QuestionList.tsx";
-import {Box, Button, rem, Text} from "@mantine/core";
+import {ConnectionProvider, useWallet, WalletProvider} from '@solana/wallet-adapter-react';
+import {WalletModalProvider, WalletMultiButton} from '@solana/wallet-adapter-react-ui';
+import {clusterApiUrl} from '@solana/web3.js';
+import {Box, Button, MantineProvider, rem, Text} from "@mantine/core";
 import {QuizForm} from "./component/QuizForm.tsx";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {ImageActionBanner} from "./component/ImageActionBanner.tsx";
 import GroupHeader from "./component/GroupHeader.tsx";
+import {WalletAdapterNetwork} from "@solana/wallet-adapter-base";
+
+import '@solana/wallet-adapter-react-ui/styles.css';
 
 function Content() {
-    const submitAnswer = (answers: QuestionWithAnswer[]) => {
-        console.log(answers)
-    };
+    const {publicKey} = useWallet();
     const [started, setStarted] = useState<boolean>();
+
+    const handleStart = () => {
+        if (!publicKey) return;
+
+        setStarted(true)
+    }
 
     return <>
         <GroupHeader sx={{
@@ -17,15 +26,15 @@ function Content() {
         }} height={rem(60)}>
             <Button>Test</Button>
             <Text size="lg">Test Header</Text>
-            <Button>Logo</Button>
+            <WalletMultiButton />
         </GroupHeader>
-        <Box mx="10px">
+        <Box>
             {
-                started
-                    ? <QuizForm question={demoQuestions} onAnswerSubmit={submitAnswer}/>
+                started && publicKey
+                    ? <QuizForm />
                     : <ImageActionBanner title={"Demo Quiz"} description={"Start the quiz"} action={{
                         label: "Start",
-                        onClick: () => setStarted(true)
+                        onClick: handleStart
                     }}/>
             }
         </Box>
@@ -33,5 +42,18 @@ function Content() {
 }
 
 export default function App() {
-    return <Content />
+    const endpoint = useMemo(() => clusterApiUrl(WalletAdapterNetwork.Devnet), []);
+    const wallets = useMemo(() => [], []);
+
+    return (
+        <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets} autoConnect>
+                <WalletModalProvider>
+                    <MantineProvider withGlobalStyles withNormalizeCSS>
+                        <Content />
+                    </MantineProvider>
+                </WalletModalProvider>
+            </WalletProvider>
+        </ConnectionProvider>
+    );
 }

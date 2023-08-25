@@ -4,6 +4,11 @@ type Question = {
     choices: string[]
 }
 
+type Answer = {
+    key: string,
+    answer: string
+}
+
 export type QuestionWithAnswer = {
     question: Question,
     answer: string
@@ -11,40 +16,28 @@ export type QuestionWithAnswer = {
 
 export type QuestionList = Question[]
 
-export const demoQuestions: QuestionList = [
-    {
-        key: "1",
-        question: "What is 1 + 1",
-        choices: [
-            "1",
-            "2",
-            "3",
-            "4"
-        ]
-    },
-    {
-        key: "2",
-        question: "What is the capital of Viet Nam",
-        choices: [
-            "Ha Noi",
-            "Sai Gon",
-            "Ho Chi Minh",
-            "Can Tho"
-        ]
-    },
-    {
-        key: "3",
-        question: "How are you?",
-        choices: [
-            "Good",
-            "Bad"
-        ]
-    }
-]
+export type QuestionResponse = {
+    questions: QuestionList
+}
+
+export type AnswerRequest = {
+    answers: Answer[],
+    wallet: string
+}
 
 export function withAnswer(questionList: QuestionList): QuestionWithAnswer[] {
     return questionList.map<QuestionWithAnswer>((val) => ({
         question: val,
         answer: ""
     }));
+}
+
+export function toAnswerRequest(questionsWithAnswer: QuestionWithAnswer[], wallet: string): AnswerRequest {
+    return {
+        wallet: wallet,
+        answers: questionsWithAnswer.map<Answer>((questionWithAnswer) => ({
+            answer: questionWithAnswer.answer,
+            key: questionWithAnswer.question.key
+        }))
+    }
 }

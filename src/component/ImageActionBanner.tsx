@@ -54,7 +54,7 @@ export function ImageActionBanner({
 
     return (
         <Card
-            radius="md"
+            radius={0}
             style={{backgroundImage: `url(${image})`, ...style}}
             className={cx(classes.card, className)}
             {...others}
